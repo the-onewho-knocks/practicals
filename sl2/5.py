@@ -1,85 +1,82 @@
-# =========================
-# IMPORT LIBRARIES
-# =========================
 import numpy as np
 
-# =========================
-# ACTIVATION FUNCTIONS
-# =========================
-def sigmoid(x):
-    return 1 / (1 + np.exp(-x))
-
-def sigmoid_derivative(x):
-    return x * (1 - x)
-
-# =========================
-# DATASET (XOR)
-# =========================
+# ------------------------------
+# Step 1: Dataset (5x3 digits → 15 features)
+# ------------------------------
 X = np.array([
-    [0, 0],
-    [0, 1],
-    [1, 0],
-    [1, 1]
+    [1,1,1, 1,0,1, 1,0,1, 1,0,1, 1,1,1], # 0
+    [0,1,0, 1,1,0, 0,1,0, 0,1,0, 1,1,1], # 1
+    [1,1,1, 0,0,1, 1,1,1, 1,0,0, 1,1,1], # 2
+    [1,1,1, 0,0,1, 1,1,1, 0,0,1, 1,1,1], # 3
+    [1,0,1, 1,0,1, 1,1,1, 0,0,1, 0,0,1], # 4
+    [1,1,1, 1,0,0, 1,1,1, 0,0,1, 1,1,1], # 5
+    [1,1,1, 1,0,0, 1,1,1, 1,0,1, 1,1,1], # 6
+    [1,1,1, 0,0,1, 0,0,1, 0,0,1, 0,0,1], # 7
+    [1,1,1, 1,0,1, 1,1,1, 1,0,1, 1,1,1], # 8
+    [1,1,1, 1,0,1, 1,1,1, 0,0,1, 1,1,1]  # 9
 ])
 
-#y is the actual expected output
-y = np.array([
-    [0],
-    [1],
-    [1],
-    [0]
-])
+# Labels (One-hot encoding) it creates an identity matrix
+y = np.eye(10)
 
-# =========================
-# INITIALIZE PARAMETERS
-# =========================
-np.random.seed(42)
+# ------------------------------
+# Step 2: Initialize parameters
+# ------------------------------
+input_size = 15
+output_size = 10
 
-input_neurons = 2
-hidden_neurons = 3
-output_neurons = 1
-
-# Weights and Biases
-W1 = np.random.uniform(size=(input_neurons, hidden_neurons))
-b1 = np.random.uniform(size=(1, hidden_neurons))
-
-W2 = np.random.uniform(size=(hidden_neurons, output_neurons))
-b2 = np.random.uniform(size=(1, output_neurons))
+np.random.seed(0)
+weights = np.random.randn(input_size, output_size)
+bias = np.zeros((1, output_size))
 
 learning_rate = 0.1
-epochs = 10000
+epochs = 1000
 
-# =========================
-# TRAINING (FORWARD + BACKPROP)
-# =========================
+# ------------------------------
+# Step 3: Softmax function
+# ------------------------------
+def softmax(z):
+    exp_z = np.exp(z - np.max(z, axis=1, keepdims=True))  # stability trick
+    return exp_z / np.sum(exp_z, axis=1, keepdims=True)
+
+# ------------------------------
+# Step 4: Training
+# ------------------------------
 for epoch in range(epochs):
+    z = np.dot(X, weights) + bias
+    y_pred = softmax(z)
 
-    # ---- Forward Propagation ----
-    hidden_input = np.dot(X, W1) + b1
-    hidden_output = sigmoid(hidden_input)
+    error = y - y_pred
 
-    final_input = np.dot(hidden_output, W2) + b2
-    predicted_output = sigmoid(final_input)
+    weights += learning_rate * np.dot(X.T, error)
+    bias += learning_rate * np.sum(error, axis=0, keepdims=True)
 
-    # ---- Error Calculation ----
-    error = y - predicted_output
+# ------------------------------
+# Step 5: Recognition function
+# ------------------------------
+def recognize_digit(test_input):
+    z = np.dot(test_input, weights) + bias
+    y_pred = softmax(z)
 
-    # ---- Backpropagation ----
-    d_output = error * sigmoid_derivative(predicted_output)
+    confidence = np.max(y_pred)
+    predicted_digit = np.argmax(y_pred)
 
-    error_hidden = np.dot(d_output, W2.T) #.T means transpose of rows and columns
-    d_hidden = error_hidden * sigmoid_derivative(hidden_output)
+    print("Predicted Digit:", predicted_digit)
+    print("Confidence:", round(confidence, 3))
 
-    # ---- Update Weights & Biases ----
-    W2 += np.dot(hidden_output.T, d_output) * learning_rate
-    b2 += np.sum(d_output, axis=0, keepdims=True) * learning_rate   #axis=0 means summation will be column wise
-    #keepdims keeps the result as 2d array
+    if confidence > 0.8:
+        print("Output: 1 (Recognized)")
+        return 1
+    else:
+        print("Output: 0 (Not Recognized)")
+        return 0
 
-    W1 += np.dot(X.T, d_hidden) * learning_rate
-    b1 += np.sum(d_hidden, axis=0, keepdims=True) * learning_rate
+# ------------------------------
+# Step 6: Test examples
+# ------------------------------
+print("Test with known digit (3):")
+recognize_digit(X[3].reshape(1, -1))
 
-# =========================
-# FINAL OUTPUT
-# =========================
-print("Final Predicted Output:")
-print(predicted_output)
+print("\nTest with unknown pattern:")
+unknown = np.array([[0,0,0, 0,1,0, 0,1,0, 0,1,0, 0,0,0]])
+recognize_digit(unknown)

@@ -12,6 +12,7 @@ X = digits.data
 y = digits.target
 # Convert to even (0) and odd (1)
 y = np.where(y % 2 == 0, 0, 1)
+
 # Split dataset
 X_train, X_test, y_train, y_test = train_test_split(
 X, y, test_size=0.2, random_state=42
@@ -26,6 +27,7 @@ y_pred = model.predict(X_test) #if score >= 0 → 1 (Odd) else → 0 (Even)
 # Accuracy
 print("Accuracy:", accuracy_score(y_test, y_pred)) # comparison between predicted values vs actual values 
 # Confusion Matrix
+
 print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
 
 # Show some predictions
