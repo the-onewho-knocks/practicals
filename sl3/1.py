@@ -11,13 +11,8 @@ import kagglehub
 # 2. LOAD DATASET
 # =========================
 # (Make sure Automobile.csv is in the same folder)
-
-path = kagglehub.dataset_download("a165079/automobilecsv")
-df = path
-
-print("Path to dataset files:", path)
-print("First 5 rows of dataset:")
-print(path.head())
+df = pd.read_csv("Automobile.csv")
+df.head()
 
 # =========================
 # 3. DATA UNDERSTANDING
