@@ -35,7 +35,7 @@ data = {
 }
 
 df = pd.DataFrame(data)
-df.head()
+print(df.head())
 
 # %%
 numeric_cols = ["math score", "reading score", "writing score"]
@@ -53,7 +53,7 @@ df
 
 # %%
 print("Dataset Info:")
-df.describe()
+print(df.describe())
 
 print("\nShape:", df.shape)
 
@@ -65,7 +65,7 @@ for col in numeric_cols:
 
 print("After Filling Missing Values:\n", df.isnull().sum())
 
-df.head()
+print(df.head())
 
 # %%
 plt.figure()
@@ -80,8 +80,8 @@ Q3 = df['math score'].quantile(0.75)
 
 IQR = Q3 - Q1
 
-lower_limit = Q1 - 1.5 * IQR
-upper_limit = Q3 + 1.5 * IQR
+lower_limit = Q1 - 1.5 * IQR    #18.75
+upper_limit = Q3 + 1.5 * IQR    #138.75
 
 print("Q1:", Q1)
 print("Q3:", Q3)
@@ -98,32 +98,19 @@ df_clean = df[(df['math score'] >= lower_limit) & (df['math score'] <= upper_lim
 print("Shape after removing outliers:", df_clean.shape)
 
 # %%
+#Min-Max scaling normalizes the data between 0 and 1 using min and max values, improving model performance.
 scaler = MinMaxScaler()
 df_clean['math_scaled'] = scaler.fit_transform(df_clean[['math score']])
 
-# Z-score normalization
+# Z-score normalization  (x-mean / standard deviation)
 df_clean['math_zscore'] = (
     df_clean['math score'] - df_clean['math score'].mean()
 ) / df_clean['math score'].std()
 
-# Log transformation
+# Log transformation used when data is skewed
 df_clean['math_log'] = np.log(df_clean['math score'])
 
-df_clean.head()
-
-# %%
-scaler = MinMaxScaler()
-df_clean['math_scaled'] = scaler.fit_transform(df_clean[['math score']])
-
-# Z-score normalization
-df_clean['math_zscore'] = (
-    df_clean['math score'] - df_clean['math score'].mean()
-) / df_clean['math score'].std()
-
-# Log transformation
-df_clean['math_log'] = np.log(df_clean['math score'])
-
-df_clean.head()
+print(df_clean.head())
 
 # %%
 plt.figure()
@@ -135,6 +122,6 @@ plt.show()
 
 # %%
 print("Final Statistical Summary:\n")
-df_clean.describe()
+print(df_clean.describe())
 
 
