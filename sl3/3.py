@@ -26,7 +26,7 @@ df.columns = [
 # =========================
 df.replace('?', np.nan, inplace=True)
 
-# Fill categorical missing values with mode
+# Fill categorical missing values with mode(with most frequent values)
 df['workclass'] = df['workclass'].fillna(df['workclass'].mode()[0])
 df['occupation'] = df['occupation'].fillna(df['occupation'].mode()[0])
 

@@ -49,7 +49,7 @@ plt.show()
 X = df[['Age', 'EstimatedSalary']]
 y = df['Purchased']
 
-# Handle missing values
+# Handle missing values (Replace NaN with mean)
 imputer = SimpleImputer(strategy='mean')
 X = imputer.fit_transform(X)
 

@@ -133,8 +133,8 @@ X_train_clean, X_test_clean, y_train_clean, y_test_clean = train_test_split(
 # ==============================
 scaler = StandardScaler()
 
-X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.transform(X_test)
+X_train_scaled = scaler.fit_transform(X_train) #for training data
+X_test_scaled = scaler.transform(X_test)    #for testing data
 
 X_train_clean_scaled = scaler.fit_transform(X_train_clean)
 X_test_clean_scaled = scaler.transform(X_test_clean)
@@ -172,7 +172,7 @@ print("\n==============================")
 print("Original Model Performance")
 print("==============================")
 print("RMSE:", rmse)
-#r2 tells us if it is perfect prediction ,No learning,Worse than guessing
+#r2 tells us if it is perfect prediction(1) ,No learning (0),Worse than guessing(less than 0)
 print("R2 Score:", round(r2, 2))
 
 print("\n==============================")
