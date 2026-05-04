@@ -1,3 +1,10 @@
+#python -m venv venv
+# venv\Scripts\activate
+# pip install numpy matplotlib tensorflow scikit-learn
+# pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+# pip install notebook
+# python -m notebook
+
 import numpy as np
 
 # ------------------------------

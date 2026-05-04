@@ -1,3 +1,10 @@
+#python -m venv venv
+# venv\Scripts\activate
+# pip install numpy matplotlib tensorflow scikit-learn
+# pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+# pip install notebook
+# python -m notebook
+
 # =========================
 # "This code implements a Perceptron classifier for digit recognition.
 #  The dataset contains 15-dimensional binary features representing 5×3 digit images. PCA is applied to reduce dimensionality to 2D for visualization. 

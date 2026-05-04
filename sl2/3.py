@@ -1,3 +1,10 @@
+#python -m venv venv
+# venv\Scripts\activate
+# pip install numpy matplotlib tensorflow scikit-learn
+# pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+# pip install notebook
+# python -m notebook
+
 # Import libraries
 import numpy as np
 from sklearn.datasets import load_digits
