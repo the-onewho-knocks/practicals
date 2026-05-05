@@ -5,12 +5,15 @@
 # pip install notebook
 # python -m notebook
 
-# =========================
+# With a suitable example demonstrate the perceptron learning law with its decision regions using
+#python. Give the output in graphical form.
+
 # "This code implements a Perceptron classifier for digit recognition.
 #  The dataset contains 15-dimensional binary features representing 5×3 digit images. PCA is applied to reduce dimensionality to 2D for visualization. 
 # The perceptron learns a linear decision boundary using weight updates on misclassification.
 #  Finally, decision regions are plotted to visualize how the model separates digit 0 from other digits.
-# =========================
+
+
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA

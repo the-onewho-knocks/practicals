@@ -5,7 +5,9 @@
 # pip install notebook
 # python -m notebook
 
-# Import libraries
+#Write a Python Program using Perceptron Neural Network to recognize even and odd numbers.
+#Given numbers are in ASCII form 0 to 9
+
 import numpy as np
 from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split

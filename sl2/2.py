@@ -6,6 +6,7 @@
 # python -m notebook
 
 # McCulloch-Pitts Neuron for ANDNOT function
+#Generate ANDNOT function using McCulloch-Pitts neural net by a python program
 
 def andnot_mcp(a, b):
     # weights
